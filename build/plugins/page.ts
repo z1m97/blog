@@ -4,6 +4,7 @@ export function createPagePlugin() {
   const pagePlugin = Pages({
     extensions: ['vue'],
     pagesDir: 'src/packages',
+    exclude: ['**/components/*.vue'],
   })
 
   return pagePlugin

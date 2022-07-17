@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h1>drag-n-drop</h1>
+    <slot></slot>
   </div>
 </template>
 
 <script lang="ts" setup>
-  useHead({
-    title: '前端拖拽练习',
-  })
+  defineProps<{
+    type?: LAYOUT_TYPES
+  }>()
 </script>

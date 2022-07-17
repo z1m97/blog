@@ -6,7 +6,6 @@ const setAlias = (route: RouteRecordRaw) => ({
   ...route,
   alias: route.path.endsWith('/') ? `${route.path}index.html` : `${route.path}.html`,
 })
-console.log(pageRoutes)
 
 const PAGE_NOT_FOUND: RouteRecordRaw = {
   name: 'NotFound',
