@@ -4,7 +4,7 @@ import type { RouterOptions } from 'vite-ssg'
 
 const setAlias = (route: RouteRecordRaw) => ({
   ...route,
-  alias: route.path.endsWith('/') ? `${route.path}index.html` : `${route.path}.html`,
+  // alias: route.path.endsWith('/') ? `${route.path}index.html` : `${route.path}.html`,
 })
 
 const PAGE_NOT_FOUND: RouteRecordRaw = {
@@ -14,7 +14,7 @@ const PAGE_NOT_FOUND: RouteRecordRaw = {
 }
 
 const routes: RouteRecordRaw[] = [...pageRoutes.map(setAlias), PAGE_NOT_FOUND]
-
+console.log(routes)
 const scrollBehavior: RouterScrollBehavior = (to, from, savedPosition) => {
   if (savedPosition) return savedPosition
   else return { top: 0 }
