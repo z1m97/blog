@@ -10,11 +10,11 @@ const setAlias = (route: RouteRecordRaw) => ({
 const PAGE_NOT_FOUND: RouteRecordRaw = {
   name: 'NotFound',
   path: '/:pathMatch(.*)*',
-  component: () => import('~/packages/error.vue'),
+  component: () => import('~/components/error.vue'),
 }
 
 const routes: RouteRecordRaw[] = [...pageRoutes.map(setAlias), PAGE_NOT_FOUND]
-console.log(routes)
+
 const scrollBehavior: RouterScrollBehavior = (to, from, savedPosition) => {
   if (savedPosition) return savedPosition
   else return { top: 0 }
