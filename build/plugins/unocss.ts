@@ -1,14 +1,11 @@
 import Unocss from 'unocss/vite'
-import { presetAttributify, presetIcons, presetUno } from 'unocss'
+import { presetAttributify, presetIcons, presetUno, presetTypography, presetWebFonts } from 'unocss'
+import { presetScrollbar } from 'unocss-preset-scrollbar'
 
 export function createUnocssPlugin() {
   const unocssPlugin = Unocss({
-    theme: {
-      fontFamily: {
-        sans: '"Inter", Inter var,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji',
-      },
-    },
     presets: [
+      presetUno(),
       presetIcons({
         extraProperties: {
           display: 'inline-block',
@@ -17,8 +14,16 @@ export function createUnocssPlugin() {
           'vertical-align': 'text-bottom',
         },
       }),
+      presetWebFonts({
+        provider: 'google',
+        fonts: {
+          sans: 'Jost',
+          mono: ['Fira Code', 'Fira Mono:400,700'],
+        }
+      }),
+      presetTypography(),
       presetAttributify(),
-      presetUno(),
+      presetScrollbar(),
     ],
   })
   return unocssPlugin

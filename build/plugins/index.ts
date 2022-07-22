@@ -7,6 +7,7 @@ import IconsResolver from 'unplugin-icons/resolver'
 
 import { createUnocssPlugin } from './unocss'
 import { createPagePlugin } from './page'
+import { createMarkdownPlugins } from './markdown'
 
 export function createVitePlugins() {
   const vitePlugins = [
@@ -34,6 +35,7 @@ export function createVitePlugins() {
     }),
     createUnocssPlugin(),
     createPagePlugin(),
+    ...createMarkdownPlugins(),
   ]
 
   return vitePlugins

@@ -19,7 +19,7 @@
     "types": ["vite/client", "vite-plugin-pages/client"],
     "paths": {
       "~/*": ["src/*"],
-      "#/*": ["types/*"]
+      "#/*": ["typings/*"]
     }
   },
   "include": [
@@ -30,7 +30,7 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "typings/**/*.d.ts",
-    "typeings/**/*.ts",
+    "typings/**/*.ts",
     "build/**/*.ts",
     "build/**/*.d.ts",
     "vite.config.ts"

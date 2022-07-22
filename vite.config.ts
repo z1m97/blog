@@ -5,7 +5,10 @@ import { pathResolve } from './build/utils'
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
-    alias: [{ find: '~/', replacement: `${pathResolve('src')}/` }],
+    alias: [
+      { find: /~\//, replacement: `${pathResolve('src')}/` },
+      { find: /#\//, replacement: `${pathResolve('typings')}/` },
+    ],
   },
   plugins: createVitePlugins(),
   optimizeDeps: {
