@@ -8,9 +8,9 @@
 </template>
 
 <script lang="ts" setup>
-  import type { Post } from '#/common'
+  import type { Frontmatter } from '#/common'
 
   const props = defineProps<{
-    post: Post
+    post: Frontmatter
   }>()
 </script>

@@ -7,11 +7,20 @@
 </template>
 
 <script lang="ts" setup>
-  import { usePosts } from '~/composables/usePosts'
+  import type { Frontmatter } from '#/common'
 
   const props = defineProps<{
     type?: string
   }>()
 
-  const { posts } = usePosts(props.type)
+  const router = useRouter()
+  const posts: Frontmatter[] = router.getRoutes()
+    .filter(i => i.path.startsWith('/posts/'))
+    .map(i => ({
+      path: i.path,
+      title: i.meta.frontmatter.title,
+      description: i.meta.frontmatter.description
+    }))
+
+  console.log(posts)
 </script>
