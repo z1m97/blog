@@ -31,7 +31,7 @@ title: 前端拖拽原理与实践
 
 <div mb-3 leading-8>这是一段文本</div>
 
-<img src="avatar.png" w-40 h-40 />
+<img src="/avatar.png" w-40 h-40 />
 
 [www.zhipin.com](https://www.zhipin.com)
 
