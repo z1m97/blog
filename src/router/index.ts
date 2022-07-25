@@ -4,7 +4,7 @@ import type { RouterOptions } from 'vite-ssg'
 
 const setAlias = (route: RouteRecordRaw) => ({
   ...route,
-  // alias: route.path.endsWith('/') ? `${route.path}index.html` : `${route.path}.html`,
+  alias: route.path.endsWith('/') ? `${route.path}index.html` : `${route.path}.html`,
 })
 
 const PAGE_NOT_FOUND: RouteRecordRaw = {

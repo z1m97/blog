@@ -4,5 +4,4 @@
 
 
 <script setup lang="ts">
-const a = new DragEvent('drag')
 </script>

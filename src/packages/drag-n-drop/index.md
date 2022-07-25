@@ -130,9 +130,3 @@ declare var DragEvent: {
 ## 一些简单的实现
 
 1. simple-draggable
-
-<DemoDraggable>
-  <div>A</div>
-  <div>B</div>
-  <div>C</div>
-</DemoDraggable>
