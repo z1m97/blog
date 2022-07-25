@@ -10,7 +10,6 @@ export function createMarkdownPlugins() {
   return [
     Markdown({
       headEnabled: true,
-      // wrapperClasses: 'prose m-auto',
       wrapperComponent: 'layout',
       markdownItOptions: {
         quotes: '""\'\'',

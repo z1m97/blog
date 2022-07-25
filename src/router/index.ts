@@ -1,13 +1,6 @@
 import pageRoutes from 'pages-generated'
-import type { RouterScrollBehavior, RouteRecordRaw } from 'vue-router'
+import type { RouterScrollBehavior } from 'vue-router'
 import type { RouterOptions } from 'vite-ssg'
-
-const setAlias = (route: RouteRecordRaw) => ({
-  ...route,
-  alias: route.path.endsWith('/') ? `${route.path}index.html` : `${route.path}.html`,
-})
-
-const routes: RouteRecordRaw[] = pageRoutes.map(setAlias)
 
 const scrollBehavior: RouterScrollBehavior = (to, from, savedPosition) => {
   if (savedPosition) return savedPosition
@@ -15,6 +8,6 @@ const scrollBehavior: RouterScrollBehavior = (to, from, savedPosition) => {
 }
 
 export const routerOptions: RouterOptions = {
-  routes,
+  routes: pageRoutes,
   scrollBehavior,
 }

@@ -1,9 +1,9 @@
 export type Frontmatter = {
-  title?: string;
-  name?: string;
-  description?: string;
-  meta?: MetaProperty[];
-  [key: string]: unknown;
+  path: string
+  title: string
+  description?: string
+  excerpt?: string
+  [key: string]: unknown
 }
 
 export {}

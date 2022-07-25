@@ -105,22 +105,31 @@ h6:focus .header-anchor {
 }
 
 .table-of-contents {
-  position: fixed;
-  top: 80px;
-  padding-top: 70px;
-  font-size: 0.8em;
-  right: 10px;
-  width: 200px;
+  position: absolute;
+  right: 0;
+  top: 0;
   bottom: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
+  font-size: 0.8em;
+  transform: translateX(100%);
+  width: 200px;
   text-overflow: ellipsis;
-  opacity: 0;
+  opacity: 1;
   transition: all .4s ease-out;
 }
 
-.table-of-contents:hover {
-  opacity: 0.5;
+.table-of-contents > ul {
+  position: sticky;
+  top: 0;
+  max-height: 100vh;
+  overflow-y: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.table-of-contents ul::-webkit-scrollbar {
+  display: none;
 }
 
 .table-of-contents ul > li::before {
@@ -128,5 +137,5 @@ h6:focus .header-anchor {
 }
 
 .table-of-contents ul > li {
-  padding-left: 0.8rem;
+  padding-left: 0.4rem;
 }

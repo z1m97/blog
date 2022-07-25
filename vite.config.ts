@@ -6,8 +6,8 @@ import { pathResolve } from './build/utils'
 export default defineConfig({
   resolve: {
     alias: [
-      { find: /~\//, replacement: `${pathResolve('src')}/` },
-      { find: /#\//, replacement: `${pathResolve('typings')}/` },
+      { find: '~/', replacement: `${pathResolve('src')}/` },
+      { find: '#/', replacement: `${pathResolve('typings')}/` },
     ],
   },
   plugins: createVitePlugins(),

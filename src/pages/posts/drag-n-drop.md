@@ -1,5 +1,6 @@
 ---
 title: 前端拖拽原理与实践
+description: 用户使用指针设备（鼠标）选择可拖拽（draggable）元素，将元素拖拽到可放置（droppable）元素，并释放鼠标按钮以放置这些元素
 ---
 
 [[toc]]

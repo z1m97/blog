@@ -1,20 +1,19 @@
 <template>
-  <AppHeader h-18 />
-  <main min-h-screen>
-    <router-link
-      :to="route.path.split('/').slice(0, -1).join('/') || '/'"
-      class="font-mono no-underline opacity-50 hover:opacity-75"
-    >
-      cd ..
-    </router-link>
-    <div px-8 my-8>
-      <div text-base prose-truegray mx-auto class="prose">
-        <h1 mb-10>{{ frontmatter.title }}</h1>
+  <AppHeader class="z-999 h-18" />
+  <main class="flex flex-col justify-center min-h-screen pt-18">
+    <div v-if="isPostPage" class="flex bg-white w-full">
+      <PostMenu class="w-72" />
+      <div class="prose w-full max-w-3xl text-base prose-truegray p-10 relative mx-auto lg:mx-0">
+        <div class="aspect-16/9 w-full bg-light-300 mb-10 border border-light-700 rounded overflow-hidden"></div>
+        <h1>{{ frontmatter.title }}</h1>
         <article ref="content">
           <slot />
         </article>
       </div>
     </div>
+
+    <slot v-else />
+
     <AppFooter />
   </main>
 </template>
@@ -29,6 +28,8 @@
   const router = useRouter()
   const route = useRoute()
   const content = ref<HTMLDivElement>()
+
+  const isPostPage = computed(() => route.path.startsWith('/posts') && route.name !== 'posts')
 
   onMounted(() => {
     const navigate = () => {
