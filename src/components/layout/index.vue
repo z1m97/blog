@@ -1,6 +1,12 @@
 <template>
   <AppHeader h-18 />
   <main min-h-screen>
+    <router-link
+      :to="route.path.split('/').slice(0, -1).join('/') || '/'"
+      class="font-mono no-underline opacity-50 hover:opacity-75"
+    >
+      cd ..
+    </router-link>
     <div px-8 my-8>
       <div text-base prose-truegray mx-auto class="prose">
         <h1 mb-10>{{ frontmatter.title }}</h1>
@@ -21,6 +27,7 @@
   }>()
 
   const router = useRouter()
+  const route = useRoute()
   const content = ref<HTMLDivElement>()
 
   onMounted(() => {
