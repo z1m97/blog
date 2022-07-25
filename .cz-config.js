@@ -23,8 +23,8 @@ module.exports = {
     footer: '请输入要关闭的issue(可选)',
     confirmCommit: '确认以上信息提交?(y/n)',
   },
-  // allowCustomScopes: true,
-  // allowBreakingChanges: [':sparkles: feat', ':bug: fix'],
+  allowCustomScopes: true,
+  allowBreakingChanges: [':sparkles: feat', ':bug: fix'],
   //跳过问题
   skipQuestion: ['body', 'footer'],
   //subject文字长度默认是
