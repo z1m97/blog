@@ -19,7 +19,7 @@ export function createPagePlugin() {
 
       // 有excerpt则覆盖desc
       route.meta = Object.assign(route.meta || {}, { 
-        frontmatter: Object.assign(data, {
+        frontmatter: Object.assign({}, data, {
           excerpt
         }) 
       }) as RouteMeta
