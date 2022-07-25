@@ -3,12 +3,14 @@ import Pages from 'vite-plugin-pages'
 import matter from 'gray-matter'
 import { pathResolve } from '../utils'
 import type { RouteMeta } from 'vue-router'
+import generateSitemap from 'vite-plugin-pages-sitemap'
 
 export function createPagePlugin() {
   const pagePlugin = Pages({
     extensions: ['vue', 'md'],
     pagesDir: 'src/packages',
     exclude: ['**/components/*.vue', '**/components/*.md'],
+    onRoutesGenerated: routes => (generateSitemap({ routes })),
     extendRoute(route) {
       const path = pathResolve(route.component.slice(1))
 
