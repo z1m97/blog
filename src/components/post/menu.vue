@@ -5,8 +5,4 @@
 </template>
 
 <script lang="ts" setup>
-import { usePosts } from '~/composables/usePosts'
-
-const { posts } = usePosts()
-
 </script>

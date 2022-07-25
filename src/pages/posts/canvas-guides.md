@@ -1,5 +1,7 @@
 ---
-title: Canvas图表设计基础
+title: Canvas 二维图表设计基础
 ---
 
-## 得到的
+HTML5 Canvas API的基础使用
+
+<!--end-->

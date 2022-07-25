@@ -1,5 +1,5 @@
 <template>
-  <ul class="w-full grid max-w-4xl mx-auto py-10 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+  <ul class="w-full grid max-w-4xl mx-auto py-10 grid-cols-2 lg:grid-cols-4 gap-4">
     <li v-for="post in posts" :key="post.path">
       <PostCard :post="post" />
     </li>
@@ -9,7 +9,7 @@
 <script lang="ts" setup>
   import type { Frontmatter } from '#/common'
 
-  const props = defineProps<{
+  defineProps<{
     type?: string
   }>()
 
@@ -19,8 +19,6 @@
     .map(i => ({
       path: i.path,
       title: i.meta.frontmatter.title,
-      description: i.meta.frontmatter.description
+      description: i.meta.frontmatter.description || i.meta.excerpt
     }))
-
-  console.log(posts)
 </script>

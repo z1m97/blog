@@ -15,14 +15,9 @@ export function createPagePlugin() {
       const path = pathResolve(route.component.slice(1))
 
       const md = fs.readFileSync(path, 'utf-8')
-      const { data, excerpt } = matter(md)
-
-      // 有excerpt则覆盖desc
-      route.meta = Object.assign(route.meta || {}, { 
-        frontmatter: Object.assign({}, data, {
-          excerpt
-        }) 
-      }) as RouteMeta
+      const { data, excerpt } = matter(md, { excerpt_separator: '<!--end-->'})
+      route.meta = Object.assign(route.meta || {}, { frontmatter: data, excerpt }) as RouteMeta
+      
       return route
     },
   })
