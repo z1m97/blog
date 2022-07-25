@@ -15,6 +15,6 @@ const scrollBehavior: RouterScrollBehavior = (to, from, savedPosition) => {
 }
 
 export const routerOptions: RouterOptions = {
-  routes: pageRoutes,
+  routes,
   scrollBehavior,
 }

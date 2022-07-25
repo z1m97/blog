@@ -265,7 +265,7 @@
   margin-top: 0.75em;
   margin-bottom: 0.75em;
 }
-.prose hr + * {
+/* .prose hr + * {
   margin-top: 0;
 }
 .prose h2 + * {
@@ -276,7 +276,7 @@
 }
 .prose h4 + * {
   margin-top: 0;
-}
+} */
 .prose h6 {
   text-transform: uppercase;
   margin-top: 20px;
@@ -443,7 +443,7 @@
   margin-top: 2.8571429em;
   margin-bottom: 2.8571429em;
 }
-.prose-sm hr + * {
+/* .prose-sm hr + * {
   margin-top: 0;
 }
 .prose-sm h2 + * {
@@ -454,7 +454,7 @@
 }
 .prose-sm h4 + * {
   margin-top: 0;
-}
+} */
 .prose-sm table {
   font-size: 0.8571429em;
   line-height: 1.5;

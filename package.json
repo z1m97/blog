@@ -14,7 +14,6 @@
     "changelog": "conventional-changelog -p gitmoji-config -i CHANGELOG.md -s"
   },
   "dependencies": {
-    "@types/markdown-it": "^12.2.3",
     "@vueuse/core": "^8.9.3",
     "@vueuse/head": "^0.7.6",
     "dayjs": "^1.11.3",
@@ -29,6 +28,7 @@
     "@octokit/rest": "^19.0.3",
     "@types/diacritics": "^1.3.1",
     "@types/fs-extra": "^9.0.13",
+    "@types/markdown-it": "^12.2.3",
     "@types/nprogress": "^0.2.0",
     "@typescript-eslint/eslint-plugin": "^5.30.6",
     "@typescript-eslint/parser": "^5.30.6",
