@@ -8,7 +8,7 @@ import generateSitemap from 'vite-plugin-pages-sitemap'
 export function createPagePlugin() {
   const pagePlugin = Pages({
     extensions: ['vue', 'md'],
-    pagesDir: 'src/packages',
+    pagesDir: 'src/pages',
     exclude: ['**/components/*.vue', '**/components/*.md'],
     onRoutesGenerated: routes => (generateSitemap({ routes })),
     extendRoute(route) {
