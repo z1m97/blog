@@ -7,18 +7,18 @@
 </template>
 
 <script lang="ts" setup>
-  import type { Frontmatter } from '#/common'
+import type { Frontmatter } from '#/common'
 
-  defineProps<{
-    type?: string
-  }>()
+defineProps<{
+  type?: string
+}>()
 
-  const router = useRouter()
-  const posts: Frontmatter[] = router.getRoutes()
-    .filter(i => i.path.startsWith('/posts/'))
-    .map(i => ({
-      path: i.path,
-      title: i.meta.frontmatter.title,
-      description: i.meta.frontmatter.description || i.meta.excerpt
-    }))
+const router = useRouter()
+const posts: Frontmatter[] = router.getRoutes()
+  .filter(i => i.path.startsWith('/posts/'))
+  .map(i => ({
+    path: i.path,
+    title: i.meta.frontmatter.title,
+    description: i.meta.frontmatter.description || i.meta.excerpt
+  }))
 </script>

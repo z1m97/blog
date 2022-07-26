@@ -1,6 +1,7 @@
 <template>
   <AppHeader class="z-999 h-18" />
-  <main class="flex flex-col justify-center min-h-screen pt-18">
+  <main class="flex flex-col justify-center min-h-screen pt-1">
+
     <div v-if="isPostPage" class="flex bg-white w-full">
       <PostMenu class="w-72" />
       <div class="prose w-full max-w-3xl text-base prose-truegray p-10 relative mx-auto lg:mx-0">
