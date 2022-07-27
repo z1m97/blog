@@ -10,19 +10,19 @@ export function createMarkdownPlugins() {
   return [
     Markdown({
       headEnabled: true,
-      wrapperComponent: 'layout',
+      // wrapperComponent: 'layout',
       markdownItOptions: {
         quotes: '""\'\'',
       },
       markdownItSetup(md) {
         md.use(shiki, { theme: 'github-light' }),
-        md.use(anchor, {
-          slugify,
-          permalink: anchor.permalink.linkInsideHeader({
-            symbol: '#',
-            renderAttrs: () => ({ 'aria-hidden': 'true' }),
-          }),
-        })
+          md.use(anchor, {
+            slugify,
+            permalink: anchor.permalink.linkInsideHeader({
+              symbol: '#',
+              renderAttrs: () => ({ 'aria-hidden': 'true' }),
+            }),
+          })
 
         md.use(LinkAttributes, {
           matcher: (link: string) => /^https?:\/\//.test(link),
@@ -31,11 +31,10 @@ export function createMarkdownPlugins() {
             rel: 'noopener',
           },
         }),
-
-        md.use(TOC, {
-          includeLevel: [1, 2, 3],
-          slugify,
-        })
+          md.use(TOC, {
+            includeLevel: [1, 2, 3],
+            slugify,
+          })
       },
     }),
   ]

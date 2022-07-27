@@ -4,6 +4,13 @@ import { presetScrollbar } from 'unocss-preset-scrollbar'
 
 export function createUnocssPlugin() {
   const unocssPlugin = Unocss({
+    theme: {
+      extend: {
+        boxShadow: {
+          'common': '0 8px 20px -3px rgba(40,49,73, 0.3)',
+        }
+      }
+    },
     presets: [
       presetUno(),
       presetIcons({

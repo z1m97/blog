@@ -15,8 +15,8 @@ export function createPagePlugin() {
       const path = pathResolve(route.component.slice(1))
 
       const md = fs.readFileSync(path, 'utf-8')
-      const { data, excerpt } = matter(md, { excerpt_separator: '<!--end-->'})
-      route.meta = Object.assign(route.meta || {}, { frontmatter: data, excerpt }) as RouteMeta
+      const { data, excerpt, content } = matter(md, { excerpt_separator: '<!--end-->'})
+      route.meta = Object.assign(route.meta || {}, { frontmatter: data, excerpt, isEmpty: !content }) as RouteMeta
       
       return route
     },

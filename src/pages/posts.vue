@@ -1,38 +1,27 @@
 <template>
-  <AppHeader class="z-999 h-18" />
-  <main class="flex flex-col justify-center min-h-screen pt-1">
-
-    <div v-if="isPostPage" class="flex bg-white w-full">
-      <PostMenu class="w-72" />
-      <div class="prose w-full max-w-3xl text-base prose-truegray p-10 relative mx-auto lg:mx-0">
-        <div class="aspect-16/9 w-full bg-light-300 mb-10 border border-light-700 rounded overflow-hidden"></div>
-        <h1>{{ frontmatter.title }}</h1>
-        <article ref="content">
-          <slot />
-        </article>
-      </div>
-    </div>
-
-    <slot v-else />
-
-    <AppFooter />
-  </main>
+<router-view v-if="indexPage" />
+<div class="flex bg-white w-full" v-else>
+  <PostMenu class="w-72" />
+  <div class="prose w-full max-w-3xl text-base prose-truegray p-6 md:p-12 relative mx-auto lg:mx-0">
+    <div v-if="frontmatter.cover" class="aspect-16/9 w-full bg-light-300 mb-10 border border-light-700 rounded overflow-hidden"></div>
+    <h1>{{ frontmatter.title }}</h1>
+    <article ref="content">
+      <router-view />
+    </article>
+  </div>
+</div>
 </template>
 
-<script lang="ts" setup>
-  import type { Frontmatter } from '#/common'
+<script setup lang="ts">
 
-  defineProps<{
-    frontmatter: Frontmatter
-  }>()
+const route = useRoute()
+const router = useRouter()
+const content = ref<HTMLDivElement>()
 
-  const router = useRouter()
-  const route = useRoute()
-  const content = ref<HTMLDivElement>()
+const frontmatter = computed(() => route.meta.frontmatter)
+const indexPage = computed(() => route.name === 'posts')
 
-  const isPostPage = computed(() => route.path.startsWith('/posts') && route.name !== 'posts')
-
-  onMounted(() => {
+onMounted(() => {
     const navigate = () => {
       if (location.hash) {
         document
