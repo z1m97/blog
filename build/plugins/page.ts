@@ -10,14 +10,22 @@ export function createPagePlugin() {
     extensions: ['vue', 'md'],
     pagesDir: 'src/pages',
     exclude: ['**/components/*.vue', '**/components/*.md'],
-    onRoutesGenerated: routes => (generateSitemap({ routes })),
+    onRoutesGenerated: (routes) =>
+      generateSitemap({
+        routes,
+        hostname: 'https://z1m97.com/',
+      }),
     extendRoute(route) {
       const path = pathResolve(route.component.slice(1))
 
       const md = fs.readFileSync(path, 'utf-8')
-      const { data, excerpt, content } = matter(md, { excerpt_separator: '<!--end-->'})
-      route.meta = Object.assign(route.meta || {}, { frontmatter: data, excerpt, isEmpty: !content }) as RouteMeta
-      
+      const { data, excerpt, content } = matter(md, { excerpt_separator: '<!--end-->' })
+      route.meta = Object.assign(route.meta || {}, {
+        frontmatter: data,
+        excerpt,
+        isEmpty: !content,
+      }) as RouteMeta
+
       return route
     },
   })

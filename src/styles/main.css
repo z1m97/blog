@@ -1,3 +1,16 @@
+
+html {
+  min-width: 360px;
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cross-pattern-bg {
+  background-size: 1.5em 1.5em;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAABGdBTUEAALGPC/xhBQAAALNJREFUeAHt1kEKgCAQBVDrMNG++x+hvXSZohP8RVpCT3D1QcbniJZiECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAr8RWJftvOdIG55HKmbEWgCFUwEEKAiEWAcBCgIhnkLePH76jNdjf7VmV6x5C3Rc0EexI26vpV2xIAsIUBAIsQ4CFATEBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAwKcCF4PwChwDPg60AAAAAElFTkSuQmCC");
+}
+
+
 #nprogress {
   pointer-events: none;
 }

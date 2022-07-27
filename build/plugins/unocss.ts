@@ -5,11 +5,11 @@ import { presetScrollbar } from 'unocss-preset-scrollbar'
 export function createUnocssPlugin() {
   const unocssPlugin = Unocss({
     theme: {
-      extend: {
-        boxShadow: {
-          'common': '0 8px 20px -3px rgba(40,49,73, 0.3)',
-        }
-      }
+      boxShadow: {
+        DEFAULT: '0 8px 20px -3px rgba(40,49,73, 0.12)',
+        card: '1px 16px 18px -6px rgba(40,49,73, 0.08)',
+        'card-hover': '1px 24px 14px -6px rgba(40,49,73, 0.12)',
+      },
     },
     presets: [
       presetUno(),
@@ -24,9 +24,9 @@ export function createUnocssPlugin() {
       presetWebFonts({
         provider: 'google',
         fonts: {
-          sans: 'Jost',
+          sans: ['Jost:100,200,300,400,500,600,700,800,900'],
           mono: ['Fira Code', 'Fira Mono:400,700'],
-        }
+        },
       }),
       presetTypography(),
       presetAttributify(),

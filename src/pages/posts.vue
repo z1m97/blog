@@ -1,27 +1,32 @@
 <template>
-<router-view v-if="indexPage" />
-<div class="flex bg-white w-full" v-else>
-  <PostMenu class="w-72" />
-  <div class="prose w-full max-w-3xl text-base prose-truegray p-6 md:p-12 relative mx-auto lg:mx-0">
-    <div v-if="frontmatter.cover" class="aspect-16/9 w-full bg-light-300 mb-10 border border-light-700 rounded overflow-hidden"></div>
-    <h1>{{ frontmatter.title }}</h1>
-    <article ref="content">
-      <router-view />
-    </article>
+  <router-view v-if="indexPage" />
+  <!-- 详情页 -->
+  <div class="flex bg-white w-full" v-else>
+    <PostMenu class="w-72" />
+    <div
+      class="prose w-full max-w-3xl text-base prose-truegray p-6 md:p-12 relative mx-auto lg:mx-0"
+    >
+      <div
+        v-if="frontmatter.cover"
+        class="aspect-16/9 w-full bg-light-300 mb-10 border border-light-700 rounded overflow-hidden"
+      ></div>
+      <h1>{{ frontmatter.title }}</h1>
+      <article ref="content">
+        <router-view />
+      </article>
+    </div>
   </div>
-</div>
 </template>
 
 <script setup lang="ts">
+  const route = useRoute()
+  const router = useRouter()
+  const content = ref<HTMLDivElement>()
 
-const route = useRoute()
-const router = useRouter()
-const content = ref<HTMLDivElement>()
+  const frontmatter = computed(() => route.meta.frontmatter)
+  const indexPage = computed(() => route.name === 'posts')
 
-const frontmatter = computed(() => route.meta.frontmatter)
-const indexPage = computed(() => route.name === 'posts')
-
-onMounted(() => {
+  onMounted(() => {
     const navigate = () => {
       if (location.hash) {
         document
