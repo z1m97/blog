@@ -1,3 +1,4 @@
 ---
-title: 基础知识
+title: 入门知识
+priority: 1
 ---

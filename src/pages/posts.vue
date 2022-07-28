@@ -1,68 +1,21 @@
 <template>
-  <router-view v-if="indexPage" />
-  <!-- 详情页 -->
-  <div class="flex bg-white w-full" v-else>
-    <PostMenu class="w-72" />
-    <div
-      class="prose w-full max-w-3xl text-base prose-truegray p-6 md:p-12 relative mx-auto lg:mx-0"
-    >
-      <div
-        v-if="frontmatter.cover"
-        class="aspect-16/9 w-full bg-light-300 mb-10 border border-light-700 rounded overflow-hidden"
-      ></div>
-      <h1>{{ frontmatter.title }}</h1>
-      <article ref="content">
-        <router-view />
-      </article>
+  <template v-if="indexPage">
+    <div bg-white border-b border-light-700 py-20 px-6 md:px-12>
+      <div relative w-full max-w-6xl mx-auto>
+        <samp class="text-xl font-medium">CODE & LIFE & CREATE</samp>
+        <div class="cross-pattern-bg absolute -top-12 -bottom-12 left-24 right-0 opacity-20"></div>
+      </div>
     </div>
-  </div>
+    <PostList />
+  </template>
+
+  <!-- 详情页 -->
+  <PostDetail v-else>
+    <router-view />
+  </PostDetail>
 </template>
 
 <script setup lang="ts">
   const route = useRoute()
-  const router = useRouter()
-  const content = ref<HTMLDivElement>()
-
-  const frontmatter = computed(() => route.meta.frontmatter)
   const indexPage = computed(() => route.name === 'posts')
-
-  onMounted(() => {
-    const navigate = () => {
-      if (location.hash) {
-        document
-          .querySelector(decodeURIComponent(location.hash))
-          ?.scrollIntoView({ behavior: 'smooth' })
-      }
-    }
-    const handleAnchors = (event: MouseEvent & { target: HTMLElement }) => {
-      const link = event.target.closest('a')
-      if (
-        !event.defaultPrevented &&
-        link &&
-        event.button === 0 &&
-        link.target !== '_blank' &&
-        link.rel !== 'external' &&
-        !link.download &&
-        !event.metaKey &&
-        !event.ctrlKey &&
-        !event.shiftKey &&
-        !event.altKey
-      ) {
-        const url = new URL(link.href)
-        if (url.origin !== window.location.origin) return
-        event.preventDefault()
-        const { pathname, hash } = url
-        if (hash && (!pathname || pathname === location.pathname)) {
-          window.history.replaceState({}, '', hash)
-          navigate()
-        } else {
-          router.push({ path: pathname, hash })
-        }
-      }
-    }
-    useEventListener(window, 'hashchange', navigate)
-    useEventListener(content.value!, 'click', handleAnchors, { passive: false })
-    navigate()
-    setTimeout(navigate, 500)
-  })
 </script>

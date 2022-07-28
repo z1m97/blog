@@ -13,8 +13,10 @@
           <router-link
             class="w-full h-full py-2 px-3 block font-medium"
             :to="tag.slug ? `?slug=${tag.slug}` : route.path"
-            >{{ tag.title }}</router-link
           >
+            <span>{{ tag.title }}</span>
+            <span>({{ tag.count }})</span>
+          </router-link>
         </li>
       </ul>
       <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -28,39 +30,51 @@
 
 <script lang="ts" setup>
   import type { Frontmatter } from '#/common'
-
-  defineProps<{
-    type?: string
-  }>()
+  import { ComputedRef } from 'vue'
 
   type FilterTag = {
     title: string
     slug: string
+    count?: number
   }
 
-  const router = useRouter()
   const route = useRoute()
   const activeSlug = computed(() => route.query.slug || '')
+  const router = useRouter()
+  const routes = router.getRoutes().filter((i) => i.path.startsWith('/posts/'))
 
-  const posts: Frontmatter[] = router
-    .getRoutes()
-    .filter((i) => i.path.startsWith('/posts/') && !i.meta.isEmpty && !i.meta.frontmatter.draft)
-    .map((i) => ({
-      path: i.path,
-      title: i.meta.frontmatter.title,
-      description: i.meta.frontmatter.description || i.meta.excerpt,
-    }))
+  const posts: ComputedRef<Frontmatter[]> = computed(() => {
+    return routes
+      .filter(
+        (i) =>
+          !i.meta.isEmpty &&
+          !i.meta.frontmatter.draft &&
+          (!activeSlug.value || activeSlug.value === i.path.split('/')[2]),
+      )
+      .map((i) => ({
+        path: i.path,
+        title: i.meta.frontmatter.title || i.path.split('/').pop(),
+        description: i.meta.frontmatter.description || i.meta.excerpt,
+      }))
+  })
 
-  const lv1_list: FilterTag[] = router
-    .getRoutes()
-    .filter((i) => i.path.startsWith('/posts/') && i.path.split('/').length === 3)
-    .map((i) => ({
-      title: i.meta.frontmatter.title,
-      slug: i.path.split('/').pop(),
-    }))
+  const lv1_list: FilterTag[] = routes
+    .filter((i) => i.path.split('/').length === 3)
+    .map((i) => {
+      const slug = i.path.split('/').pop()
+      const post_list = routes.filter((t) => t.path.split('/')[2] === slug)
+      return {
+        slug,
+        title: i.meta.frontmatter.title,
+        priority: i.meta.frontmatter.priority || 9999,
+        count: post_list.length,
+      }
+    })
+    .sort((a, b) => a.priority - b.priority)
 
   lv1_list.unshift({
     title: '全部',
     slug: '',
+    count: routes.length,
   })
 </script>

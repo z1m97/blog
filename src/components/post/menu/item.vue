@@ -21,6 +21,7 @@
 
 <script setup lang="ts">
   import type { PostMenuItem } from '#/common'
+
   defineProps<{
     node: PostMenuItem
   }>()

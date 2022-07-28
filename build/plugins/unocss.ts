@@ -25,7 +25,7 @@ export function createUnocssPlugin() {
         provider: 'google',
         fonts: {
           sans: ['Jost:100,200,300,400,500,600,700,800,900'],
-          mono: ['Fira Code', 'Fira Mono:400,700'],
+          // mono: ['Fira Code', 'Fira Mono:400,700'],
         },
       }),
       presetTypography(),
