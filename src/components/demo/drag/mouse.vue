@@ -61,6 +61,16 @@
       w: 0, // 单元格尺寸
       h: 0,
     }
+    // 禁用
+    forbid = {
+      boundary: false,
+      overlay: false,
+    }
+    // 检查
+    check = {
+      boundary: false,
+      overlay: false,
+    }
 
     // 数据列表
     list = []
@@ -75,7 +85,7 @@
 
       // 不能在当前节点定义因为鼠标也能移出当前节点
       useEventListener(window, 'mousemove', (evt) => this.moveId && this.onMove(evt))
-      useEventListener(window, 'mouseup', (evt) => this.onUp(evt))
+      useEventListener(window, 'mouseup', (evt) => this.moveId && this.onUp(evt))
     }
     add() {
       const obj = new Obj()
