@@ -17,13 +17,12 @@ export default defineConfig({
   build: {
     rollupOptions: {
       onwarn(warning, next) {
-        if (warning.code !== 'UNUSED_EXTERNAL_IMPORT')
-          next(warning)
+        if (warning.code !== 'UNUSED_EXTERNAL_IMPORT') next(warning)
       },
     },
   },
-  ssgOptions: {
-    formatting: 'minify',
-    format: 'cjs',
-  },
+  // ssgOptions: {
+  //   formatting: 'minify',
+  //   format: 'cjs',
+  // },
 })

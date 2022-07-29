@@ -24,7 +24,7 @@
 
   let elm = null
 
-  watchEffect(() => {
+  const set = () => {
     if (type.value === feedType.canvas) {
       elm = document.createElement('canvas')
       elm.width = 80
@@ -42,6 +42,16 @@
       elm.src = '/avatar.png'
       elm.className = 'w-20 h-20'
     }
+  }
+
+  // watchEffect(() => {})
+
+  watch([type], () => {
+    set()
+  })
+
+  onMounted(() => {
+    set()
   })
 
   const ondragstart = (evt: DragEvent) => {
