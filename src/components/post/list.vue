@@ -43,14 +43,14 @@
   const router = useRouter()
   const routes = router.getRoutes().filter((i) => i.path.startsWith('/posts/'))
 
+  const validRoutes = routes.filter(
+    (i) => i.path.startsWith('/posts/') && !i.meta.isEmpty && !i.meta.frontmatter.draft,
+  )
+  const validSlug = [...new Set(validRoutes.map((i) => i.path.split('/')[2]))]
+
   const posts: ComputedRef<Frontmatter[]> = computed(() => {
-    return routes
-      .filter(
-        (i) =>
-          !i.meta.isEmpty &&
-          !i.meta.frontmatter.draft &&
-          (!activeSlug.value || activeSlug.value === i.path.split('/')[2]),
-      )
+    return validRoutes
+      .filter((i) => !activeSlug.value || activeSlug.value === i.path.split('/')[2])
       .map((i) => ({
         path: i.path,
         title: i.meta.frontmatter.title || i.path.split('/').pop(),
@@ -58,15 +58,14 @@
       }))
   })
 
-  const lv1_list: FilterTag[] = routes
-    .filter((i) => i.path.split('/').length === 3)
+  const lv1_list: FilterTag[] = validSlug
     .map((i) => {
-      const slug = i.path.split('/').pop()
-      const post_list = routes.filter((t) => t.path.split('/')[2] === slug)
+      const post_list = validRoutes.filter((t) => t.path.split('/')[2] === i)
+      const lv1_route = routes.find((t) => t.name === `posts-${i}`)
       return {
-        slug,
-        title: i.meta.frontmatter.title,
-        priority: i.meta.frontmatter.priority || 9999,
+        slug: i,
+        title: lv1_route?.meta.frontmatter.title,
+        priority: lv1_route?.meta.frontmatter.priority || 9999,
         count: post_list.length,
       }
     })
@@ -75,6 +74,6 @@
   lv1_list.unshift({
     title: '全部',
     slug: '',
-    count: routes.length,
+    count: validRoutes.length,
   })
 </script>

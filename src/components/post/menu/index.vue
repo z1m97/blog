@@ -3,51 +3,59 @@
     class="w-72 h-screen overflow-auto border-r border-light-700 inline-block sticky top-0 bg-light-300 hidden lg:block"
   >
     <ul class="my-6 px-3">
-      <li v-for="item in viewList" :key="item.path">
-        <PostMenuItem :node="item" />
+      <li v-for="item in reactiveList" :key="item.name">
+        <PostMenuItem :node="item" :getData="getData" />
       </li>
     </ul>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import type { PostMenuItem } from '#/common'
+  import type { MenuItem, MenuData, MenuInfo } from '#/common'
+  import { RouteRecordNormalized } from 'vue-router'
 
+  const route = useRoute()
   const router = useRouter()
   const routes = router.getRoutes().filter((i) => i.path.startsWith('/posts/'))
+  const validRoutes = routes
+  // .filter((i) => !i.meta.isEmpty && !i.meta.frontmatter.draft)
 
-  const viewList: PostMenuItem[] = routes
-    .filter((i) => i.path.startsWith('/posts/'))
+  const data: MenuData = validRoutes
     .map((i) => ({
       path: i.path,
+      name: i.name,
       title: i.meta.frontmatter.title,
       priority: i.meta.frontmatter.priority || 9999,
+      open: ref<boolean>((route.name as string).startsWith(i.name as string)),
     }))
-    .reduce((val, cVal) => {
-      const pathList = cVal.path.split('/').filter((t) => t && t !== 'posts')
+    .reduce((val: MenuData, cVal: MenuInfo) => {
+      val[cVal.name] = cVal
+      return val
+    }, {} as MenuData)
 
-      const sort = (idx: number, list: PostMenuItem[]) => {
-        let item = list.find((e) => e.slug === pathList[idx])
-        if (!item) {
-          item = {
-            path: '',
-            title: '',
-            priority: 9999,
-            slug: pathList[idx],
-            sub: [],
-          }
-          list.push(item)
-          list.sort((a, b) => a.priority - b.priority)
-        }
-        if (idx === pathList.length - 1) {
-          Object.assign(item, cVal)
-          list.sort((a, b) => a.priority - b.priority)
-        } else {
-          sort(idx + 1, item.sub)
-        }
+  const getData = (name: string): MenuInfo => data[name]
 
-        return list
+  const menuList: MenuItem[] = validRoutes.reduce((val, cVal: RouteRecordNormalized) => {
+    const pathList = cVal.path.split('/').filter((i) => i && i !== 'posts')
+    const sort = (idx: number, list: MenuItem[]) => {
+      const name = 'posts-' + pathList.slice(0, idx + 1).join('-')
+      let item = list.find((i) => i.name === name)
+      if (!item) {
+        item = {
+          name,
+          sub: [],
+        }
+        list.push(item)
       }
-      return sort(0, val)
-    }, [] as PostMenuItem[])
+      if (idx === pathList.length - 1) {
+        list.sort((a, b) => data[a.name].priority - data[b.name].priority)
+      } else {
+        sort(idx + 1, item.sub)
+      }
+      return list
+    }
+    return sort(0, val)
+  }, [] as MenuItem[])
+
+  const reactiveList = reactive(menuList)
 </script>

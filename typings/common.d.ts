@@ -7,12 +7,21 @@ export type Frontmatter = {
   [key: string]: unknown
 }
 
-export type PostMenuItem = {
+export type MenuItem = {
+  name: string
+  sub: MenuItem[]
+}
+
+export type MenuInfo = {
   path: string
+  name: string
   title: string
-  slug: string
   priority: number
-  sub?: PostMenuItem[]
+  open: Ref<boolean>
+}
+
+export type MenuData = {
+  [key: string]: MenuInfo
 }
 
 export {}

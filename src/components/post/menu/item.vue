@@ -1,35 +1,48 @@
 <template>
   <div class="flex flex-col">
     <router-link
-      :to="node.path"
-      :class="[
-        isActiveRoute(node.path) ? '!text-white !bg-gray-700' : 'text-gray-700',
-        !node.path && 'pointer-events-none',
-      ]"
-      class="text-sm cursor-pointer px-3 py-1 rounded-lg hover:bg-gray-200 transition-all duration-300 mb-1"
+      :to="data.path"
+      :class="[isActive ? '!text-white !bg-gray-700' : 'text-gray-700']"
+      class="text-sm cursor-pointer px-3 py-1 rounded-lg flex hover:bg-gray-200 transition-all duration-300 mb-1"
+      @click="onClick"
     >
-      {{ node.title || node.slug }}
+      <span>{{ data.title || slug }}</span>
+      <span v-if="node.sub?.length"> ({{ node.sub?.length }})</span>
+
+      <div class="h-5 aspect-1 bg-gray-600/20 ml-auto" @click.stop="onExpand"> </div>
     </router-link>
 
-    <ul class="ml-4" v-if="node.sub?.length">
-      <li v-for="item in node.sub" :key="item.path">
-        <PostMenuItem :node="item" />
-      </li>
-    </ul>
+    <div v-show="open">
+      <ul class="ml-4" v-if="node.sub?.length">
+        <li v-for="item in node.sub" :key="item.name">
+          <PostMenuItem :node="item" :getData="getData" />
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import type { PostMenuItem } from '#/common'
+  import type { MenuItem, MenuInfo } from '#/common'
 
-  defineProps<{
-    node: PostMenuItem
+  const props = defineProps<{
+    node: MenuItem
+    getData: (name: string) => MenuInfo
   }>()
 
-  const route = useRoute()
+  const data: MenuInfo = props.getData(props.node.name)
+  const open = data.open
+  const slug = data.path.split('/').pop()
 
-  const isActiveRoute = (path: string) => {
-    return path && route.path === path
+  const route = useRoute()
+  const isActive = computed(() => data.path && route.path === data.path)
+
+  const onClick = () => {
+    open.value = true
+  }
+
+  const onExpand = () => {
+    open.value = !open.value
   }
 </script>
 
