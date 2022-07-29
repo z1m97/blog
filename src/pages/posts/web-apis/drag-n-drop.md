@@ -106,6 +106,36 @@ declare var DragEvent: {
 
 ### 数据传递
 
+拖拽中的数据传递借助于拖拽事件的 `dataTransfer` 属性，当拖拽发生时，数据必须与被拖拽的项目相关联。例如，拖拽选定的文本时，关联的数据是文本本身；拖拽链接时，拖拽数据项就是链接的URL。
+
+设置拖拽数据项，使用 `setData()` 方法。这个方法接收两个参数，即数据类型和数据值
+
+```js
+event.dataTransfer.setData("text/plain", "Text to drag");
+```
+
+可以提供多种格式的数据，并且多次调用 `setData()` 方法
+
+
+```js
+const dt = event.dataTransfer;
+dt.setData("application/x.bookmark", bookmarkString);
+dt.setData("text/uri-list", "http://www.mozilla.org");
+dt.setData("text/plain", "http://www.mozilla.org");
+```
+
+以相同的格式添加两次数据，新数据将替换旧数据，可使用 `clearData()` 方法清除该数据。
+
+```js
+event.dataTransfer.clearData("text/uri-list");
+```
+
+取数据使用 `getData()` 方法，传入对应的数据类型
+
+```js
+event.dataTransfer.getData('text/plain')
+```
+
 
 ### 设置拖拽图像
 
@@ -183,9 +213,10 @@ event.dataTransfer.effectAllowed = 'copy'
 
 Vue.Draggable
 
+[demo](http://sortablejs.github.io/Sortable/)
+
 ### vue-draggable-resizable
 
-[playground](https://mauricius.github.io/vue-draggable-resizable/)
+[demo](https://mauricius.github.io/vue-draggable-resizable/)
 
-### interact.js
 

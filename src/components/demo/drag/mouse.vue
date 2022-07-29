@@ -183,13 +183,14 @@
       const moveItem = this.list.find((i) => i.id === this.moveId)
       this.list.forEach((i) => moveItem.checkOverlay(i, moved))
 
-      moveItem.checkBoundary(this.grid)
+      moveItem.checkBoundary(this.grid, moved)
     }
     onUp(evt: MouseEvent) {
       const pos = this.getMoved()
       const moveItem = this.list.find((i) => i.id === this.moveId)
       moveItem.pos.x += pos?.rows || 0
       moveItem.pos.y += pos?.cols || 0
+      moveItem.checkBoundary(this.grid)
 
       this.moveId = null
       this.moveStartPos = null
@@ -231,33 +232,25 @@
     overlay: Array<string> = []
     outofBox = false
 
-    checkBoundary(grid: Grid) {
-      this.outofBox = this.checkOverlay({
-        pos: {
-          x: 0,
-          y: 0,
-        },
-        size: {
-          w: grid.rows,
-          h: grid.cols,
-        },
-      } as Obj)
+    checkBoundary(grid: Grid, moved: Count) {
+      this.outofBox = !this.checkTopo(
+        {
+          pos: {
+            x: 0,
+            y: 0,
+          },
+          size: {
+            w: grid.rows,
+            h: grid.cols,
+          },
+        } as Obj,
+        moved,
+      )?.inside
     }
 
     // 检测另一个Obj是否与当前重合
     checkOverlay(target: Obj, moved: Count = null) {
-      if (target.id === this.id) return
-      const { x, y } = this.pos
-      const { w, h } = this.size
-      const { x: tx, y: ty } = target.pos
-      const { w: tw, h: th } = target.size
-
-      const check = (_x: number, _y: number) => {
-        _x += moved?.rows || 0
-        _y += moved?.cols || 0
-        return _x > tx && _x < tx + tw && _y > ty && _y < ty + th
-      }
-      const overlay = check(x, y) || check(x + w, y) || check(x + w, y + h) || check(x, y + h)
+      const overlay = this.checkTopo(target, moved)?.overlay
 
       if (target.id) {
         if (overlay) {
@@ -273,6 +266,32 @@
 
       return overlay
     }
+
+    checkTopo(target: Obj, moved: Count = null) {
+      if (target.id === this.id) return
+      const { x, y } = this.pos
+      const { w, h } = this.size
+      const { x: tx, y: ty } = target.pos
+      const { w: tw, h: th } = target.size
+
+      const check = (_x: number, _y: number) => {
+        _x += moved?.rows || 0
+        _y += moved?.cols || 0
+        return _x > tx && _x < tx + tw && _y > ty && _y < ty + th
+      }
+
+      // 有重叠
+      const overlay = check(x, y) || check(x + w, y) || check(x + w, y + h) || check(x, y + h)
+      // 在内部
+      const inside = check(x, y) && check(x + w, y) && check(x + w, y + h) && check(x, y + h)
+      // 交叉
+      const cross = overlay && !inside
+
+      return {
+        overlay,
+        inside,
+      }
+    }
   }
 
   let vm = reactive<VM>(new VM())
@@ -281,4 +300,19 @@
   onMounted(() => {
     vm.init(root.value)
   })
+
+  /**
+   * TODO
+   * 1. 节点的宽高拉伸
+   * 2. 节点的父子关系：判断inside、跟随移动
+   * 3. 只允许handler拖拽
+   * 4. canvas选项
+   * 5. 阻止移动
+   * 6. 鸟瞰图
+   * 7. 画布缩放、画布拖拽
+   * 8. 绘制连接关系svg
+   * 9. 支持别的形状
+   * 10. 嵌slot
+   * 11. 右键菜单：删除、复制、调整层级
+   */
 </script>
