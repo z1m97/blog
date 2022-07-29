@@ -19,7 +19,8 @@
           :key="item.id"
           :style="vm.genStyle(item)"
           :class="{
-            '!bg-purple-400/40 border-purple-500': vm.moveId === item.id,
+            '!bg-purple-500/40 border-purple-500': vm.moveId === item.id,
+            '!bg-red-500/40 border-red-500': item.overlay.length || item.outofBox,
           }"
           class="absolute bg-green-500/40 border border-green-500"
           @mousedown="vm.onDown($event, item)"
@@ -33,6 +34,10 @@
 <script lang="ts" setup>
   import { nanoid } from 'nanoid'
 
+  interface Count {
+    [key: string]: number
+  }
+
   type Pos = {
     x: number
     y: number
@@ -42,6 +47,7 @@
     w: number
     h: number
   }
+
   type Grid = {
     color: string
     bgColor: string
@@ -60,16 +66,6 @@
       // cols: 20, // 不设置则根据rows计算
       w: 0, // 单元格尺寸
       h: 0,
-    }
-    // 禁用
-    forbid = {
-      boundary: false,
-      overlay: false,
-    }
-    // 检查
-    check = {
-      boundary: false,
-      overlay: false,
     }
 
     // 数据列表
@@ -101,7 +97,7 @@
         `top:${this.grid.h * item.pos.y}px`,
       ]
       if (this.moveId && item.id === this.moveId) {
-        const dist = this.getMoveDist()
+        const dist = this.getMovedDist()
         dist && attrs.push(`transform: translate(${dist.distX}px, ${dist.distY}px)`)
       }
       return attrs.join(';')
@@ -166,6 +162,8 @@
       root.appendChild(canvas)
       this.grid.w = w
       this.grid.h = h
+      this.grid.rows = rows
+      this.grid.cols = cols
     }
     onDown(evt: MouseEvent, item: Obj) {
       this.moveId = item.id
@@ -180,6 +178,12 @@
         x: evt.clientX,
         y: evt.clientY,
       }
+      const moved = this.getMoved()
+
+      const moveItem = this.list.find((i) => i.id === this.moveId)
+      this.list.forEach((i) => moveItem.checkOverlay(i, moved))
+
+      moveItem.checkBoundary(this.grid)
     }
     onUp(evt: MouseEvent) {
       const pos = this.getMoved()
@@ -191,8 +195,9 @@
       this.moveStartPos = null
       this.moveEndPos = null
     }
+    // 计算相关
     getMoved() {
-      const dist = this.getMoveDist()
+      const dist = this.getMovedDist()
       if (dist) {
         const { distX, distY } = dist
         const rows = Math.round(distX / this.grid.w)
@@ -201,7 +206,7 @@
       }
       return null
     }
-    getMoveDist() {
+    getMovedDist() {
       if (!this.moveEndPos || !this.moveStartPos) return
       return {
         distX: this.moveEndPos.x - this.moveStartPos.x,
@@ -221,6 +226,53 @@
       h: 4,
     }
     zIndex = 100
+
+    // overlay相关的Obj的id
+    overlay: Array<string> = []
+    outofBox = false
+
+    checkBoundary(grid: Grid) {
+      this.outofBox = this.checkOverlay({
+        pos: {
+          x: 0,
+          y: 0,
+        },
+        size: {
+          w: grid.rows,
+          h: grid.cols,
+        },
+      } as Obj)
+    }
+
+    // 检测另一个Obj是否与当前重合
+    checkOverlay(target: Obj, moved: Count = null) {
+      if (target.id === this.id) return
+      const { x, y } = this.pos
+      const { w, h } = this.size
+      const { x: tx, y: ty } = target.pos
+      const { w: tw, h: th } = target.size
+
+      const check = (_x: number, _y: number) => {
+        _x += moved?.rows || 0
+        _y += moved?.cols || 0
+        return _x > tx && _x < tx + tw && _y > ty && _y < ty + th
+      }
+      const overlay = check(x, y) || check(x + w, y) || check(x + w, y + h) || check(x, y + h)
+
+      if (target.id) {
+        if (overlay) {
+          !this.overlay.includes(target.id) && this.overlay.push(target.id)
+          !target.overlay.includes(this.id) && target.overlay.push(this.id)
+        } else {
+          this.overlay.includes(target.id) &&
+            (this.overlay = this.overlay.filter((i) => i !== target.id))
+          target.overlay.includes(this.id) &&
+            (target.overlay = target.overlay.filter((i) => i !== this.id))
+        }
+      }
+
+      return overlay
+    }
   }
 
   let vm = reactive<VM>(new VM())
