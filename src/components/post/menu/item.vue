@@ -1,15 +1,22 @@
 <template>
   <div class="flex flex-col">
     <router-link
-      :to="data.path"
+      :to="data?.path || route.path"
       :class="[isActive ? '!text-white !bg-gray-700' : 'text-gray-700']"
-      class="text-sm cursor-pointer px-3 py-1 rounded-lg flex hover:bg-gray-200 transition-all duration-300 mb-1"
+      class="text-sm cursor-pointer pl-7 pr-3 py-1 rounded-lg flex hover:bg-gray-200 transition-all duration-300 mb-1"
       @click="onClick"
     >
-      <span>{{ data.title || slug }}</span>
-      <span v-if="node.sub?.length"> ({{ node.sub?.length }})</span>
-
-      <div class="h-5 aspect-1 bg-gray-600/20 ml-auto" @click.stop="onExpand"> </div>
+      <div
+        v-if="node?.sub?.length"
+        class="w-5 aspect-1 -ml-6 flex items-center justify-center hover:bg-gray-400/20 mr-1 rounded-lg"
+        @click.stop.prevent="onExpand"
+      >
+        <uim:angle-right-b :class="open && 'rotate-90'" />
+      </div>
+      <span>{{ data?.title || node.slug }}</span>
+      <span class="ml-1 flex items-center justify-center font-mono text-xs" v-if="node.sub?.length">
+        ({{ node.sub?.length }})
+      </span>
     </router-link>
 
     <div v-show="open">
@@ -31,11 +38,11 @@
   }>()
 
   const data: MenuInfo = props.getData(props.node.name)
-  const open = data.open
-  const slug = data.path.split('/').pop()
+
+  const open = toRef(props.node, 'open')
 
   const route = useRoute()
-  const isActive = computed(() => data.path && route.path === data.path)
+  const isActive = computed(() => data?.path && route.path === data?.path)
 
   const onClick = () => {
     open.value = true

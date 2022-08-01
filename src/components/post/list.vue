@@ -15,7 +15,7 @@
             :to="tag.slug ? `?slug=${tag.slug}` : route.path"
           >
             <span>{{ tag.title }}</span>
-            <span>({{ tag.count }})</span>
+            <span> ({{ tag.count }})</span>
           </router-link>
         </li>
       </ul>

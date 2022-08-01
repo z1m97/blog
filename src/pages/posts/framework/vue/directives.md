@@ -1,3 +1,4 @@
 ---
-title: 指令 directives
+title: directives
+description: Vue 指令 API 详解
 ---

@@ -9,7 +9,9 @@ export type Frontmatter = {
 
 export type MenuItem = {
   name: string
+  slug: string
   sub: MenuItem[]
+  open: boolean
 }
 
 export type MenuInfo = {
@@ -17,7 +19,6 @@ export type MenuInfo = {
   name: string
   title: string
   priority: number
-  open: Ref<boolean>
 }
 
 export type MenuData = {

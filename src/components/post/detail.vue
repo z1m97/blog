@@ -2,7 +2,7 @@
   <div class="flex bg-white w-full">
     <PostMenu />
     <div
-      class="prose w-full max-w-3xl text-base prose-truegray p-6 md:p-12 relative mx-auto lg:mx-0"
+      class="prose w-full max-w-3xl text-base prose-truegray p-6 md:p-12 relative z-0 mx-auto lg:mx-0"
     >
       <div
         v-if="frontmatter.cover"

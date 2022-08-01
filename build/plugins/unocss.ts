@@ -10,6 +10,9 @@ export function createUnocssPlugin() {
         card: '1px 16px 18px -6px rgba(40,49,73, 0.08)',
         'card-hover': '1px 24px 14px -6px rgba(40,49,73, 0.12)',
       },
+      // transition: {
+      //   'all-300': 'transition-all duration-300 ease-in-out',
+      // },
     },
     presets: [
       presetUno(),
