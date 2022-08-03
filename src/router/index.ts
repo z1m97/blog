@@ -8,7 +8,8 @@ const scrollBehavior: RouterScrollBehavior = (to, from, savedPosition) => {
 }
 
 const indexPage = pageRoutes.find((i) => i.name === 'index')
-indexPage.redirect = 'posts'
+indexPage.name = 'home'
+indexPage.redirect = '/posts'
 
 export const routerOptions: RouterOptions = {
   routes: pageRoutes,

@@ -8,6 +8,7 @@ export default defineConfig({
     alias: [
       { find: '~/', replacement: `${pathResolve('src')}/` },
       { find: '#/', replacement: `${pathResolve('typings')}/` },
+      { find: '@seed/', replacement: `${pathResolve('seed')}/` },
     ],
   },
   plugins: createVitePlugins(),

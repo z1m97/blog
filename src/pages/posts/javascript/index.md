@@ -1,6 +1,6 @@
 ---
 title: Javascript语言基础
-priority: 2
+priority: 1
 ---
 
 

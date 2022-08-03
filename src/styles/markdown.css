@@ -111,7 +111,7 @@ h6:focus .header-anchor {
   bottom: 0;
   font-size: 0.8em;
   transform: translateX(100%);
-  width: 200px;
+  /* width: 200px; */
   text-overflow: ellipsis;
   opacity: 1;
   transition: all .4s ease-out;

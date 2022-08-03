@@ -3,7 +3,7 @@
     <router-link
       :to="data?.path || route.path"
       :class="[isActive ? '!text-white !bg-gray-700' : 'text-gray-700']"
-      class="text-sm cursor-pointer pl-7 pr-3 py-1 rounded-lg flex hover:bg-gray-200 transition-all duration-300 mb-1"
+      class="text-sm cursor-pointer pl-7 pr-3 py-1 rounded-lg flex hover:bg-gray-200 transition-all-300 mb-1"
       @click="onClick"
     >
       <div
@@ -11,7 +11,7 @@
         class="w-5 aspect-1 -ml-6 flex items-center justify-center hover:bg-gray-400/20 mr-1 rounded-lg"
         @click.stop.prevent="onExpand"
       >
-        <uim:angle-right-b :class="open && 'rotate-90'" />
+        <uim:angle-right-b :class="open && 'rotate-90'" class="rotate-0 transition-all-300" />
       </div>
       <span>{{ data?.title || node.slug }}</span>
       <span class="ml-1 flex items-center justify-center font-mono text-xs" v-if="node.sub?.length">

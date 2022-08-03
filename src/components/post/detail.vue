@@ -1,9 +1,7 @@
 <template>
   <div class="flex bg-white w-full">
     <PostMenu />
-    <div
-      class="prose w-full max-w-3xl text-base prose-truegray p-6 md:p-12 relative z-0 mx-auto lg:mx-0"
-    >
+    <div class="prose w-full max-w-3xl prose-truegray p-6 md:p-12 relative z-0 mx-auto lg:mx-0">
       <div
         v-if="frontmatter.cover"
         class="aspect-16/9 w-full bg-light-300 mb-10 border border-light-700 rounded overflow-hidden"

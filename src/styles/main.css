@@ -3,6 +3,7 @@ html {
   min-width: 360px;
   scroll-behavior: smooth;
   -webkit-tap-highlight-color: transparent;
+  overflow: overlay;
 }
 
 .cross-pattern-bg {

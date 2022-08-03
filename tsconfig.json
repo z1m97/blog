@@ -19,7 +19,8 @@
     "types": ["vite/client", "vite-plugin-pages/client"],
     "paths": {
       "~/*": ["src/*"],
-      "#/*": ["typings/*"]
+      "#/*": ["typings/*"],
+      "@seed/*": ["seed/*"]
     }
   },
   "include": [
@@ -33,7 +34,10 @@
     "typings/**/*.ts",
     "build/**/*.ts",
     "build/**/*.d.ts",
-    "vite.config.ts"
+    "vite.config.ts",
+    "seed/**/*.vue",
+    "seed/**/*.ts",
+    "seed/**/*.d.ts"
   ],
   "exclude": ["dist", "node_modules"]
 }

@@ -1,20 +1,25 @@
 <template>
   <div
-    :class="{
-      '!-ml-64': !open,
-    }"
+    :class="!open && '!-ml-64'"
     class="ml-0 w-72 h-screen border-r border-light-700 inline-block sticky top-0 z-10 bg-light-300 hidden lg:block transition-all ease-in-out duration-300"
   >
     <div
       class="text-gray-600/50 z-10 w-6 flex items-center justify-center aspect-1 bg-white absolute rounded-full border border-light-700 cursor-pointer right-0 top-12 transform translate-x-[50%]"
       @click="open = !open"
     >
-      <uim:angle-right-b v-if="open" class="rotate-180 text-sm" />
-      <gg-menu-left v-else class="text-xs" />
+      <gg:chevron-left
+        :class="open ? 'scale-show' : 'scale-hide'"
+        class="absolute-center transition-all-300 text-sm"
+      />
+      <gg-menu-left
+        :class="open ? 'scale-hide' : 'scale-show'"
+        class="absolute-center transition-all-300 text-xs"
+      />
     </div>
     <ul
-      class="relative z-0 py-6 px-3 h-screen overflow-auto opacity-100"
-      :class="{ '!opacity-0 pointer-events-none !overflow-hidden': !open }"
+      ref="el"
+      class="relative z-0 py-6 px-4 h-screen overflow-auto opacity-100 scrollbar-default"
+      :class="{ '!opacity-0 pointer-events-none': !open }"
     >
       <li v-for="item in reactiveList" :key="item.name">
         <PostMenuItem :node="item" :getData="getData" />
@@ -74,4 +79,11 @@
   }, [] as MenuItem[])
 
   const reactiveList = reactive(menuList)
+
+  const el = ref<HTMLElement | null>(null)
+  const isLocked = useScrollLock(el)
+
+  watchEffect(() => {
+    isLocked.value = !open.value
+  })
 </script>

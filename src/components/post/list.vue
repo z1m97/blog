@@ -1,17 +1,17 @@
 <template>
-  <div class="py-6 md:py-12 px-6 md:px-12">
+  <div class="py-6 md:py-12 px-4 md:px-9">
     <div class="w-full max-w-6xl mx-auto">
-      <ul class="flex flex-wrap mb-8 -mx-4">
+      <ul class="flex flex-wrap mb-4 md:mb-8 -mr-1">
         <li
           v-for="tag in lv1_list"
           :key="tag.slug"
           :class="{
-            '!bg-white !shadow !-top-2px': activeSlug === tag.slug,
+            '!bg-white !shadow': activeSlug === tag.slug,
           }"
-          class="relative shadow-none rounded-lg top-0 hover:bg-gray-100 ml-4 mb-2 cursor-pointer text-sm transition-all duration-300"
+          class="relative shadow-none rounded-lg mr-1 mb-1.5 bg-light-0 hover:bg-light-600 cursor-pointer text-sm transition-all duration-300"
         >
           <router-link
-            class="w-full h-full py-2 px-3 block font-medium"
+            class="w-full h-full py-2 px-3 block font-medium text-sm md:text-base"
             :to="tag.slug ? `?slug=${tag.slug}` : route.path"
           >
             <span>{{ tag.title }}</span>
@@ -19,7 +19,8 @@
           </router-link>
         </li>
       </ul>
-      <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+
+      <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
         <li v-for="post in posts" :key="post.path">
           <PostCard :post="post" />
         </li>
